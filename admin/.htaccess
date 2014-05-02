@@ -1,0 +1,14 @@
+DirectoryIndex index.php
+RewriteEngine on
+
+RewriteCond $1 !^(index\.php|assets|robots\.txt)
+# Protect application and system files from being viewed when the index.php is missing
+RewriteCond $1 ^(applications|system|private|logs)
+# Rewrite to index.php/access_denied/URL
+RewriteRule ^(.*)$ index.php/access_denied/$1 [PT,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ ./index.php/$1 [L,QSA]
+
+
